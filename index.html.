@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>24 días para vos ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  color: #fff8e9;
+  text-align: center;
+  background:
+    radial-gradient(circle at top, #52664b, transparent 55%),
+    linear-gradient(145deg, #142c22, #243d2c 60%, #172a20);
+}
+
+header { padding: 35px 15px 20px; }
+
+h1 {
+  color: #f2d89c;
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #f6e9ce;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.decoration {
+  color: #e5bd70;
+  font-size: 24px;
+  letter-spacing: 8px;
+  margin: 15px;
+}
+
+.calendar {
+  max-width: 440px;
+  margin: 20px auto;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.door {
+  min-height: 92px;
+  border: 2px solid #d9b66d;
+  border-radius: 10px;
+  background: linear-gradient(145deg,#a63837,#742421);
+  color: #f9e7b8;
+  font-family: Georgia,serif;
+  font-size: 27px;
+  box-shadow: 0 4px 8px #0005;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.door:active { transform: scale(.93); }
+
+.door span {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+  color: #f3dca5;
+}
+
+.door.opened {
+  background: #d1b77e;
+  color: #653c28;
+}
+
+footer {
+  padding: 20px;
+  color: #f1dba9;
+  font-style: italic;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000b;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal.show { display: flex; }
+
+.message {
+  background: #fff4df;
+  color: #613b2c;
+  padding: 30px 22px;
+  border: 3px solid #d4b46e;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 380px;
+  animation: appear .3s ease;
+}
+
+.message h2 {
+  color: #8d302d;
+  margin-top: 0;
+}
+
+.message p {
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.close {
+  background: #8c302d;
+  color: white;
+  border: none;
+  padding: 11px 25px;
+  border-radius: 20px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+@keyframes appear {
+  from { transform: scale(.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="decoration">✦ ❄ ✦</div>
+  <h1>Para mi persona favorita ❤️</h1>
+  <p class="subtitle">24 días, 24 sorpresas y un montón de amor.</p>
+  <p>Un regalito especial para Kevin 🎄</p>
+</header>
+
+<main class="calendar" id="calendar"></main>
+
+<footer>
+  Hecho con mucho amor, especialmente para vos. ❤️
+  <p>✧ Feliz Navidad ✧</p>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="message">
+    <h2 id="dayTitle"></h2>
+    <p id="dayMessage"></p>
+    <button class="close" onclick="closeDoor()">Cerrar ❤️</button>
+  </div>
+</div>
+
+<script>
+
+// CAMBIÁ ESTOS MENSAJES POR TUS PROPIAS SORPRESAS
+
+const surprises = [
+"Quería empezar este calendario recordándote lo especial que sos para mí. ❤️",
+"Hoy te regalo un recuerdo: uno de mis momentos favoritos con vos.",
+"Una canción que me hace pensar en nosotros. 🎵",
+"Gracias por cada momento compartido.",
+"Hoy toca una razón por la que te elijo.",
+"Una foto nuestra que siempre me saca una sonrisa. 📸",
+"Me encanta poder compartir tantas cosas con vos.",
+"Hoy te dejo un abrazo convertido en palabras.",
+"Un recuerdo que quiero guardar para siempre.",
+"Gracias por ser parte de mi vida.",
+"Hoy te toca elegir nuestra próxima cita. ❤️",
+"Una de mis cosas favoritas de nosotros.",
+"Si pudiera repetir un día con vos, elegiría uno de nuestros momentos más lindos.",
+"Una canción más para nuestra historia. 🎶",
+"Hoy quiero recordarte cuánto te quiero.",
+"Un pequeño secreto: me encanta crear recuerdos con vos.",
+"Gracias por todas las risas.",
+"Hoy te regalo una promesa: seguir construyendo momentos lindos.",
+"Una foto que merece estar en nuestro álbum.",
+"Me gusta nuestra historia, incluso con sus capítulos inesperados.",
+"Hoy toca planear una aventura juntos.",
+"Cada día compartido tiene algo que lo hace especial.",
+"Ya casi llega Navidad. Te quiero muchísimo.",
+"Feliz Navidad, Kevin. Gracias por compartir tu historia conmigo. ❤️"
+];
+
+const calendar = document.getElementById("calendar");
+
+surprises.forEach((message, index) => {
+  const day = index + 1;
+  const button = document.createElement("button");
+  button.className = "door";
+  button.innerHTML = `${day}<span>✦ abrir ✦</span>`;
+  button.onclick = () => openDoor(day, message, button);
+  calendar.appendChild(button);
+});
+
+function openDoor(day, message, button) {
+  document.getElementById("dayTitle").textContent =
+    `Puerta ${day} ❤️`;
+
+  document.getElementById("dayMessage").textContent = message;
+  document.getElementById("modal").classList.add("show");
+  button.classList.add("opened");
+}
+
+function closeDoor() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+</script>
+</body>
+</html>
