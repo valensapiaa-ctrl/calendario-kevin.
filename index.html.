@@ -3,168 +3,213 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>24 días para vos ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un diciembre para vos ❤️</title>
 
 <style>
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Georgia, serif;
-  color: #fff8e9;
-  text-align: center;
-  background:
-    radial-gradient(circle at top, #52664b, transparent 55%),
-    linear-gradient(145deg, #142c22, #243d2c 60%, #172a20);
+ margin:0;
+ min-height:100vh;
+ font-family:Georgia,serif;
+ background:linear-gradient(160deg,#102b20,#294432,#14271d);
+ color:#fff5df;
+ text-align:center;
 }
 
-header { padding: 35px 15px 20px; }
-
-h1 {
-  color: #f2d89c;
-  font-size: 34px;
-  margin-bottom: 8px;
+.snow {
+ position:fixed;
+ top:-20px;
+ color:white;
+ pointer-events:none;
+ animation:fall linear infinite;
+ z-index:5;
 }
+@keyframes fall {
+ to { transform:translateY(110vh); }
+}
+
+#login {
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:22px;
+}
+
+.welcome {
+ width:100%;
+ max-width:390px;
+ padding:35px 22px;
+ border:1px solid #d9b76f;
+ border-radius:20px;
+ background:#173526;
+ box-shadow:0 10px 35px #0006;
+}
+
+h1 { color:#eacb83; font-size:32px; }
+h2 { color:#a43632; }
+
+input {
+ width:100%;
+ padding:14px;
+ border:1px solid #d6b66f;
+ border-radius:9px;
+ margin:15px 0;
+ text-align:center;
+ font-size:17px;
+}
+
+button {
+ cursor:pointer;
+ font-family:Georgia,serif;
+}
+
+.enter {
+ background:#a33331;
+ color:white;
+ padding:13px 28px;
+ border:1px solid #e3c17c;
+ border-radius:25px;
+ font-size:16px;
+}
+
+#error { color:#ffb5a9; font-size:14px; }
+
+#calendarPage { display:none; padding:25px 12px; }
 
 .subtitle {
-  color: #f6e9ce;
-  font-size: 15px;
-  font-style: italic;
-}
-
-.decoration {
-  color: #e5bd70;
-  font-size: 24px;
-  letter-spacing: 8px;
-  margin: 15px;
+ color:#f0d9a9;
+ font-style:italic;
 }
 
 .calendar {
-  max-width: 440px;
-  margin: 20px auto;
-  padding: 15px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+ max-width:440px;
+ margin:25px auto;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:11px;
 }
 
 .door {
-  min-height: 92px;
-  border: 2px solid #d9b66d;
-  border-radius: 10px;
-  background: linear-gradient(145deg,#a63837,#742421);
-  color: #f9e7b8;
-  font-family: Georgia,serif;
-  font-size: 27px;
-  box-shadow: 0 4px 8px #0005;
-  cursor: pointer;
-  transition: transform .2s;
+ min-height:90px;
+ border:2px solid #e0bd75;
+ border-radius:10px;
+ background:linear-gradient(145deg,#a83b36,#712622);
+ color:#fff0ca;
+ font-size:27px;
+ box-shadow:0 4px 8px #0005;
 }
 
-.door:active { transform: scale(.93); }
-
 .door span {
-  display: block;
-  font-size: 11px;
-  margin-top: 5px;
-  color: #f3dca5;
+ display:block;
+ font-size:11px;
+ margin-top:5px;
 }
 
 .door.opened {
-  background: #d1b77e;
-  color: #653c28;
-}
-
-footer {
-  padding: 20px;
-  color: #f1dba9;
-  font-style: italic;
+ background:#d2b879;
+ color:#583c27;
 }
 
 .modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #000b;
-  z-index: 10;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+ display:none;
+ position:fixed;
+ inset:0;
+ z-index:10;
+ background:#000c;
+ justify-content:center;
+ align-items:center;
+ padding:20px;
 }
 
-.modal.show { display: flex; }
+.modal.show { display:flex; }
 
 .message {
-  background: #fff4df;
-  color: #613b2c;
-  padding: 30px 22px;
-  border: 3px solid #d4b46e;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 380px;
-  animation: appear .3s ease;
-}
-
-.message h2 {
-  color: #8d302d;
-  margin-top: 0;
+ background:#fff4df;
+ color:#67452f;
+ border:3px solid #d5b36d;
+ border-radius:17px;
+ padding:28px 22px;
+ width:100%;
+ max-width:370px;
+ animation:appear .3s;
 }
 
 .message p {
-  line-height: 1.7;
-  white-space: pre-wrap;
+ line-height:1.7;
+ white-space:pre-wrap;
 }
 
 .close {
-  background: #8c302d;
-  color: white;
-  border: none;
-  padding: 11px 25px;
-  border-radius: 20px;
-  margin-top: 12px;
-  font-size: 14px;
+ background:#92312e;
+ color:white;
+ border:0;
+ padding:12px 25px;
+ border-radius:20px;
 }
 
 @keyframes appear {
-  from { transform: scale(.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+ from {transform:scale(.8);opacity:0}
+ to {transform:scale(1);opacity:1}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="decoration">✦ ❄ ✦</div>
-  <h1>Para mi persona favorita ❤️</h1>
-  <p class="subtitle">24 días, 24 sorpresas y un montón de amor.</p>
-  <p>Un regalito especial para Kevin 🎄</p>
-</header>
+<div id="login">
+ <div class="welcome">
+  <div style="font-size:42px">🎄</div>
+  <h1>Un diciembre para vos</h1>
+  <p>Preparé algo especial para vos, Kevin.</p>
+  <p style="color:#e8c981;font-style:italic">
+   24 días, 24 sorpresas y una historia que seguimos escribiendo.
+  </p>
+  <p>Para entrar, necesitás nuestra clave ❤️</p>
 
-<main class="calendar" id="calendar"></main>
+  <input id="password" type="password"
+   placeholder="Nuestra contraseña">
 
-<footer>
-  Hecho con mucho amor, especialmente para vos. ❤️
-  <p>✧ Feliz Navidad ✧</p>
-</footer>
+  <button class="enter" onclick="enterCalendar()">
+   Entrar ✨
+  </button>
+
+  <p id="error"></p>
+ </div>
+</div>
+
+<div id="calendarPage">
+ <div style="font-size:30px">❄️ 🎄 ❄️</div>
+ <h1 style="color:#eacb83">Para mi persona favorita</h1>
+ <p class="subtitle">24 días, 24 pequeñas sorpresas.</p>
+ <p>Elegí una puertita para descubrir qué preparé ❤️</p>
+
+ <div class="calendar" id="calendar"></div>
+
+ <p style="color:#eacb83;font-style:italic">
+  Hecho con amor, especialmente para vos.
+ </p>
+</div>
 
 <div class="modal" id="modal">
-  <div class="message">
-    <h2 id="dayTitle"></h2>
-    <p id="dayMessage"></p>
-    <button class="close" onclick="closeDoor()">Cerrar ❤️</button>
-  </div>
+ <div class="message">
+  <h2 id="dayTitle"></h2>
+  <p id="dayMessage"></p>
+  <button class="close" onclick="closeDoor()">Cerrar ❤️</button>
+ </div>
 </div>
 
 <script>
 
-// CAMBIÁ ESTOS MENSAJES POR TUS PROPIAS SORPRESAS
+// PERSONALIZACIÓN
+const PASSWORD = "2302";
 
+// MENSAJES DE EJEMPLO
 const surprises = [
 "Quería empezar este calendario recordándote lo especial que sos para mí. ❤️",
-"Hoy te regalo un recuerdo: uno de mis momentos favoritos con vos.",
+"Hoy te regalo uno de mis recuerdos favoritos con vos.",
 "Una canción que me hace pensar en nosotros. 🎵",
 "Gracias por cada momento compartido.",
 "Hoy toca una razón por la que te elijo.",
@@ -178,41 +223,62 @@ const surprises = [
 "Si pudiera repetir un día con vos, elegiría uno de nuestros momentos más lindos.",
 "Una canción más para nuestra historia. 🎶",
 "Hoy quiero recordarte cuánto te quiero.",
-"Un pequeño secreto: me encanta crear recuerdos con vos.",
+"Me encanta crear recuerdos con vos.",
 "Gracias por todas las risas.",
 "Hoy te regalo una promesa: seguir construyendo momentos lindos.",
 "Una foto que merece estar en nuestro álbum.",
 "Me gusta nuestra historia, incluso con sus capítulos inesperados.",
 "Hoy toca planear una aventura juntos.",
-"Cada día compartido tiene algo que lo hace especial.",
+"Cada día compartido tiene algo especial.",
 "Ya casi llega Navidad. Te quiero muchísimo.",
 "Feliz Navidad, Kevin. Gracias por compartir tu historia conmigo. ❤️"
 ];
 
+function enterCalendar() {
+ const password = document.getElementById("password").value;
+
+ if(password === PASSWORD) {
+  document.getElementById("login").style.display="none";
+  document.getElementById("calendarPage").style.display="block";
+ } else {
+  document.getElementById("error").textContent="Esa no es la clave. ¡Probá de nuevo! ❤️";
+ }
+}
+
 const calendar = document.getElementById("calendar");
 
-surprises.forEach((message, index) => {
-  const day = index + 1;
-  const button = document.createElement("button");
-  button.className = "door";
-  button.innerHTML = `${day}<span>✦ abrir ✦</span>`;
-  button.onclick = () => openDoor(day, message, button);
-  calendar.appendChild(button);
+surprises.forEach((message,index) => {
+ const day=index+1;
+ const button=document.createElement("button");
+ button.className="door";
+ button.innerHTML=day+"<span>✦ abrir ✦</span>";
+ button.onclick=()=>openDoor(day,message,button);
+ calendar.appendChild(button);
 });
 
-function openDoor(day, message, button) {
-  document.getElementById("dayTitle").textContent =
-    `Puerta ${day} ❤️`;
-
-  document.getElementById("dayMessage").textContent = message;
-  document.getElementById("modal").classList.add("show");
-  button.classList.add("opened");
+function openDoor(day,message,button) {
+ document.getElementById("dayTitle").textContent="Puerta "+day+" ❤️";
+ document.getElementById("dayMessage").textContent=message;
+ document.getElementById("modal").classList.add("show");
+ button.classList.add("opened");
 }
 
 function closeDoor() {
-  document.getElementById("modal").classList.remove("show");
+ document.getElementById("modal").classList.remove("show");
 }
 
+// NIEVE
+for(let i=0;i<25;i++){
+ const snow=document.createElement("div");
+ snow.className="snow";
+ snow.textContent="❄";
+ snow.style.left=Math.random()*100+"%";
+ snow.style.animationDuration=(5+Math.random()*8)+"s";
+ snow.style.animationDelay=Math.random()*8+"s";
+ snow.style.fontSize=(9+Math.random()*12)+"px";
+ document.body.appendChild(snow);
+}
 </script>
+
 </body>
 </html>
