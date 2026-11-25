@@ -245,25 +245,67 @@ function enterCalendar() {
  }
 }
 
+
 const calendar = document.getElementById("calendar");
 
-surprises.forEach((message,index) => {
- const day=index+1;
- const button=document.createElement("button");
- button.className="door";
- button.innerHTML=day+"<span>✦ abrir ✦</span>";
- button.onclick=()=>openDoor(day,message,button);
- calendar.appendChild(button);
+// FECHA DE INICIO DEL CALENDARIO
+const YEAR = 2026;
+const MONTH = 11; // Diciembre (enero = 0)
+
+function getToday() {
+  const now = new Date();
+  return new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  );
+}
+
+function isAvailable(day) {
+  const today = getToday();
+  const unlockDate = new Date(YEAR, MONTH, day);
+
+  return today >= unlockDate;
+}
+
+surprises.forEach((message, index) => {
+  const day = index + 1;
+  const button = document.createElement("button");
+  const available = isAvailable(day);
+
+  button.className = "door";
+
+  if (available) {
+    button.innerHTML = `${day}<span>✦ abrir ✦</span>`;
+    button.onclick = () => openDoor(day, message, button);
+  } else {
+    button.disabled = true;
+    button.innerHTML = `${day}<span>🔒 cerrado</span>`;
+  }
+
+  if (available) {
+    button.classList.add("opened");
+    button.classList.remove("opened");
+  }
+
+  calendar.appendChild(button);
 });
 
-function openDoor(day,message,button) {
- document.getElementById("dayTitle").textContent="Puerta "+day+" ❤️";
- document.getElementById("dayMessage").textContent=message;
- document.getElementById("modal").classList.add("show");
- button.classList.add("opened");
+function openDoor(day, message, button) {
+  if (!isAvailable(day)) return;
+
+  document.getElementById("dayTitle").textContent =
+    `Puerta ${day} ❤️`;
+
+  document.getElementById("dayMessage").textContent = message;
+  document.getElementById("modal").classList.add("show");
+  button.classList.add("opened");
 }
 
 function closeDoor() {
+  document.getElementById("modal").classList.remove("show");
+}
+
  document.getElementById("modal").classList.remove("show");
 }
 
